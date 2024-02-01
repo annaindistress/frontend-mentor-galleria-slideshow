@@ -58,7 +58,12 @@ export default function Picture() {
       <div>
         <p className={styles.year}>{currentPicture.year}</p>
         <p className={styles.text}>{currentPicture.description}</p>
-        <a className={styles.source} href={currentPicture.source}>
+        <a
+          className={styles.source}
+          href={currentPicture.source}
+          target="_blank"
+          rel="noreferrer"
+        >
           Go to source
         </a>
       </div>
