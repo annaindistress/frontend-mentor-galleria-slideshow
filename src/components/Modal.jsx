@@ -8,7 +8,10 @@ export default function Modal({ isOpen, onClose }) {
   const currentPucture = pictures[index];
   const ref = useRef();
 
-  const imgUrl = new URL(currentPucture.images.gallery, import.meta.url).href;
+  const imgUrl = new URL(
+    `../assets/${currentPucture.images.gallery}`,
+    import.meta.url
+  ).href;
 
   useEffect(() => {
     if (isOpen) {

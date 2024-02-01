@@ -28,10 +28,14 @@ export default function Picture() {
     dispatch({ type: "timer/paused" });
   }
 
-  const imgUrl = new URL(currentPicture.images.hero[imageSize], import.meta.url)
-    .href;
-  const artistImgUrl = new URL(currentPicture.artist.image, import.meta.url)
-    .href;
+  const imgUrl = new URL(
+    `../assets/${currentPicture.images.hero[imageSize]}`,
+    import.meta.url
+  ).href;
+  const artistImgUrl = new URL(
+    `../assets/${currentPicture.artist.image}`,
+    import.meta.url
+  ).href;
 
   return (
     <section className={styles.section}>
