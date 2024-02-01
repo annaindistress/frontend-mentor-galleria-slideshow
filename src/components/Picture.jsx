@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSlideshow } from "../context/SlideshowContext";
+import Modal from "./Modal";
 import { MEDIA_QUERIES } from "../config";
 import styles from "./Picture.module.css";
 
 export default function Picture() {
-  const { pictures, index } = useSlideshow();
+  const { pictures, index, dispatch } = useSlideshow();
   const [imageSize, setImageSize] = useState("small");
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const currentPicture = pictures[index];
 
   useEffect(function () {
@@ -20,6 +22,11 @@ export default function Picture() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  function handleModal() {
+    setIsOpenModal((state) => !state);
+    dispatch({ type: "timer/paused" });
+  }
 
   const imgUrl = new URL(currentPicture.images.hero[imageSize], import.meta.url)
     .href;
@@ -43,7 +50,9 @@ export default function Picture() {
             src={imgUrl}
             alt={`${currentPicture.artist.name}'s ${currentPicture.name}`}
           />
-          <button type="button">View image</button>
+          <button type="button" onClick={handleModal}>
+            View image
+          </button>
         </div>
       </div>
       <div>
@@ -53,6 +62,7 @@ export default function Picture() {
           Go to source
         </a>
       </div>
+      <Modal isOpen={isOpenModal} onClose={handleModal} />
     </section>
   );
 }

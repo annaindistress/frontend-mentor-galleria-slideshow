@@ -8,6 +8,8 @@ const initialState = {
   pictures: data,
   status: "start",
   index: 0,
+  currentTimer: 0,
+  isPaused: false,
 };
 
 function reducer(state, action) {
@@ -26,25 +28,31 @@ function reducer(state, action) {
       return {
         ...state,
         index: state.index - 1,
+        currentTimer: 0,
       };
     case "slide/next":
       return {
         ...state,
         index: state.index + 1,
+        currentTimer: 0,
       };
+    case "timer/updated":
+      return { ...state, currentTimer: state.currentTimer + action.payload };
+    case "timer/paused":
+      return { ...state, isPaused: !state.isPaused };
     default:
       throw new Error("Unknown action");
   }
 }
 
 function SlideshowProvider({ children }) {
-  const [{ pictures, status, index }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ pictures, status, index, currentTimer, isPaused }, dispatch] =
+    useReducer(reducer, initialState);
 
   return (
-    <SlideshowContext.Provider value={{ pictures, status, index, dispatch }}>
+    <SlideshowContext.Provider
+      value={{ pictures, status, index, currentTimer, isPaused, dispatch }}
+    >
       {children}
     </SlideshowContext.Provider>
   );

@@ -1,50 +1,51 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSlideshow } from "../context/SlideshowContext";
 import { TIMER_MAX, TIMER_STEP } from "../config";
 import styles from "./Controls.module.css";
 
 export default function Controls() {
-  const { pictures, index, dispatch } = useSlideshow();
-  const [timerValue, setTimerValue] = useState(0);
+  const { pictures, index, currentTimer, isPaused, dispatch } = useSlideshow();
 
   const currentPicture = pictures[index];
 
   const isFirst = index === 0;
   const isFinal = index === pictures.length - 1;
 
-  useEffect(function () {
-    const id = setInterval(function () {
-      setTimerValue((value) => value + TIMER_STEP);
-    }, TIMER_STEP);
+  useEffect(
+    function () {
+      const id = setInterval(function () {
+        if (!isPaused) {
+          dispatch({ type: "timer/updated", payload: TIMER_STEP });
+        }
+      }, TIMER_STEP);
 
-    return () => clearInterval(id);
-  }, []);
+      return () => clearInterval(id);
+    },
+    [currentTimer, isPaused, dispatch]
+  );
 
   useEffect(
     function () {
-      if (timerValue === TIMER_MAX) {
+      if (currentTimer === TIMER_MAX) {
         if (!isFinal) {
           dispatch({ type: "slide/next" });
-          setTimerValue(0);
         }
       }
     },
-    [isFinal, timerValue, dispatch]
+    [isFinal, currentTimer, dispatch]
   );
 
   function handlePrev() {
     dispatch({ type: "slide/previous" });
-    setTimerValue(0);
   }
 
   function handleNext() {
     dispatch({ type: "slide/next" });
-    setTimerValue(0);
   }
 
   return (
     <footer className={styles.footer}>
-      <progress max={TIMER_MAX} value={timerValue} />
+      <progress max={TIMER_MAX} value={currentTimer} />
       <div>
         <p>
           <span className={styles.name}>{currentPicture.name}</span>
