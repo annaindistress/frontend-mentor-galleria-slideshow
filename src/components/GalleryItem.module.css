@@ -1,6 +1,8 @@
 .article {
   position: relative;
   color: var(--color-100);
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .article::after {
@@ -9,7 +11,7 @@
   inset-inline: 0;
   bottom: 0;
   display: block;
-  height: calc(100% - 80px);
+  height: 170px;
   background: var(--gradient);
 }
 
@@ -37,9 +39,10 @@
 }
 
 .article img {
-  width: 100%;
+  width: auto;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .article a {
