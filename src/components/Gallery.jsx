@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSlideshow } from "../context/SlideshowContext";
 import GalleryItem from "./GalleryItem";
+import { MEDIA_QUERIES } from "../config";
 import styles from "./Gallery.module.css";
 
 function generateColumns(items, columnCount) {
@@ -42,9 +43,9 @@ export default function Gallery() {
 
   useEffect(function () {
     function handleResize() {
-      if (window.innerWidth >= 1200) {
+      if (window.innerWidth >= MEDIA_QUERIES.DESKTOP) {
         setColumnCount(4);
-      } else if (window.innerWidth >= 768) {
+      } else if (window.innerWidth >= MEDIA_QUERIES.TABLET) {
         setColumnCount(2);
       } else {
         setColumnCount(1);
@@ -64,7 +65,7 @@ export default function Gallery() {
         {columns.map((column, i) => (
           <div className={styles.column} key={i}>
             {column.map((picture) => (
-              <GalleryItem key={picture.name} picture={picture} index={i} />
+              <GalleryItem key={picture.name} picture={picture} />
             ))}
           </div>
         ))}

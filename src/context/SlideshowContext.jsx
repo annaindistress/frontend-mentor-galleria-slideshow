@@ -13,9 +13,25 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "slideshow/started":
-      return { ...state, status: "in-progress", index: action.payload };
+      return {
+        ...state,
+        status: "in-progress",
+        index: state.pictures.findIndex(
+          (picture) => picture.name === action.payload
+        ),
+      };
     case "slideshow/finished":
       return { ...state, status: "start", index: 0 };
+    case "slide/previous":
+      return {
+        ...state,
+        index: state.index - 1,
+      };
+    case "slide/next":
+      return {
+        ...state,
+        index: state.index + 1,
+      };
     default:
       throw new Error("Unknown action");
   }

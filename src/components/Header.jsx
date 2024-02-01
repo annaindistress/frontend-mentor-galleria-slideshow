@@ -3,11 +3,11 @@ import logoImg from "../assets/logo.svg";
 import { useSlideshow } from "../context/SlideshowContext";
 
 export default function Header() {
-  const { status, dispatch } = useSlideshow();
+  const { pictures, status, dispatch } = useSlideshow();
 
   function handleClick() {
     if (status === "start") {
-      dispatch({ type: "slideshow/started", payload: 0 });
+      dispatch({ type: "slideshow/started", payload: pictures[0].name });
     } else {
       dispatch({ type: "slideshow/finished" });
     }

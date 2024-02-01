@@ -56,11 +56,11 @@
 }
 
 .article a:focus-visible::before {
-  background-color: var(--color-100-transparent);
+  background-color: var(--color-100-transparent-50);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .article a:hover::before {
-    background-color: var(--color-100-transparent);
+    background-color: var(--color-100-transparent-50);
   }
 }

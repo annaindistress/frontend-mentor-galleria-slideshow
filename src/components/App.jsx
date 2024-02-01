@@ -2,9 +2,11 @@ import { useSlideshow } from "../context/SlideshowContext";
 import Header from "./Header";
 import Main from "./Main";
 import List from "./Gallery";
+import Picture from "./Picture";
+import Controls from "./Controls";
 
 export default function App() {
-  const { status, pictures, index } = useSlideshow();
+  const { status } = useSlideshow();
 
   return (
     <>
@@ -16,8 +18,12 @@ export default function App() {
             <List />
           </>
         )}
-
-        {status === "in-progress" && <p>{pictures[index].name}</p>}
+        {status === "in-progress" && (
+          <>
+            <Picture />
+            <Controls />
+          </>
+        )}
       </Main>
     </>
   );
